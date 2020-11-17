@@ -1,12 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import store from '../store';
+import Store from '../store';
 
 // 封装方法判断是否有该地址权限
 function hasUrl(url) {
-  return JSON.parse(sessionStorage.getItem('userInfo')).menus_url.some(item => item == url);
+  return Store.state.userInfo.menus_url.some(item => item == url)
 }
-
 Vue.use(Router)
 // 导出index下的二级路由
 export const indexChild = [{
@@ -15,6 +14,7 @@ export const indexChild = [{
     name: '菜单管理',
     beforeEnter: (to, from, next) => {
       hasUrl('/menu') ? next() : next('/home')
+      console.log(1);
     }
   },
   {

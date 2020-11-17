@@ -1,7 +1,13 @@
 <template>
   <div>
     <el-container>
-      <el-header center>xxx后台管理系统</el-header>
+      <el-header center>
+        xxx后台管理系统
+        <div class="user">
+          {{getuserInfo.username}}
+          <el-button type="danger" size="small" @click="quit">退出</el-button>
+        </div>
+      </el-header>
       <el-container>
         <el-aside width="200px">
             <!-- 导航 -->
@@ -23,12 +29,24 @@
 import vNav from '../components/nav';
 // 引入面包屑
 import bread from '../components/el-bread';
+import {mapGetters,mapActions} from 'vuex';
 export default {
     components:{
         vNav,
         bread
-    }
+    },
+    computed: {
+      ...mapGetters(['getuserInfo'])
+    },
+    methods: {
+      ...mapActions(['changeUserInfo']),
+      quit(){
+        this.changeUserInfo();
+        this.$router.push('/login')
+      }
+    },
 };
+
 </script>
 
 <style lang="stylus" scoped>
@@ -40,6 +58,7 @@ export default {
   line-height 60px
   font-size $smillFontSize
   background: $foreBgColor
-
+.user 
+  float right
   
 </style>
